@@ -1,0 +1,10 @@
+@import "../../css-config/mixins.scss";
+.container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.column {
+  flex: 1;
+}

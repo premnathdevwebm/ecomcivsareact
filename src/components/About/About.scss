@@ -1,0 +1,27 @@
+@import "../../css-config/mixins.scss";
+
+.wrapper {
+  max-width: 100%;
+  box-sizing: border-box;
+  outline: none;
+  position: relative;
+  .imageBox {
+    display: block;
+    img {
+      vertical-align: middle;
+      border-style: none;
+    }
+  }
+  .contextcontent {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.5);
+    span {
+      text-transform: uppercase;
+    }
+  }
+}

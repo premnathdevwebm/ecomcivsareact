@@ -1,0 +1,29 @@
+@import "../../css-config/mixins.scss";
+.container {
+  width: 100%;
+  font-size: 25px;
+  padding: 150px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-flow: wrap;
+  gap: 20px;
+  @include md {
+    justify-content: space-between;
+    padding: 50px 0;
+  }
+  .item {
+    padding: 10px 2px;
+    max-width: 300px;
+    &:nth-child(4) {
+      width: 150px;
+      @include md {
+        width: auto;
+      }
+    }
+    i {
+        font-size: 30px;
+        color: #ff805d;
+    }
+  }
+}
