@@ -8,7 +8,7 @@ const User = () => {
   const [login, setLogin] = useState(false);
   const { user } = useContext(Context);
   return (
-    <div className={!!user ? "containert": "noback"}>
+    <div className={!user?.user ? "containert": "noback"}>
       {!user?.user &&
         (login ? (
           <Login setLogin={setLogin} />

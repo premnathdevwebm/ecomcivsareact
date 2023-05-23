@@ -1,0 +1,64 @@
+@import "../../css-config/mixins.scss";
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.profile-section {
+  width: 100%;
+  max-width: 800px;
+  background-color: #f2f2f2;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.profile-info {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.profile-info img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.user-details h2 {
+  margin-bottom: 5px;
+}
+
+.order-section {
+  width: 100%;
+  max-width: 800px;
+  background-color: #f2f2f2;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.order-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.order-table th,
+.order-table td {
+  padding: 10px;
+  text-align: left;
+}
+
+.order-table th {
+  background-color: #eaeaea;
+}
+
+.order-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.order-table tr:hover {
+  background-color: #e5e5e5;
+}

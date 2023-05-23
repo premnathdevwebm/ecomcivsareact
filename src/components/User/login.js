@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import "./Login.scss";
 import { makeRequest } from "../../utils/api";
-import { setToken } from "../../utils/helpers";
+import { setToken, removeToken } from "../../utils/helpers";
 import { Context } from "../../utils/context";
 
 const Login = ({ setLogin }) => {
@@ -15,6 +15,7 @@ const Login = ({ setLogin }) => {
       identifier: email,
       password: password,
     });
+    removeToken()
     handleUser({ user: { ...response.data.user }, loading: false });
     setToken(response.data.jwt);
   };

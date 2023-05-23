@@ -1,100 +1,64 @@
-import { useContext } from "react";
-import {
-  MDBCol,
-  MDBContainer,
-  MDBRow,
-  MDBCard,
-  MDBCardText,
-  MDBCardBody,
-  MDBProgress,
-  MDBProgressBar,
-} from "mdb-react-ui-kit";
-
+import { useContext, useState, useEffect } from "react";
 import { Context } from "../../utils/context";
+import "./Profile.scss";
+import { makeRequestAuth } from "../../utils/api";
 
-const UserDashBoard = () => {
+const ProfilePage = () => {
   const { user } = useContext(Context);
-  return (
-    <section style={{ backgroundColor: "#eee" }}>
-      <MDBContainer className="py-5">
-        <MDBRow>
-          <MDBCol lg="8">
-            <MDBCard className="mb-4">
-              <MDBCardBody>
-                <MDBRow>
-                  <MDBCol sm="3">
-                    <MDBCardText>Full Name</MDBCardText>
-                  </MDBCol>
-                  <MDBCol sm="9">
-                    <MDBCardText className="text-muted">
-                      {user.user.username}
-                    </MDBCardText>
-                  </MDBCol>
-                </MDBRow>
-                <hr />
-                <MDBRow>
-                  <MDBCol sm="3">
-                    <MDBCardText>Email</MDBCardText>
-                  </MDBCol>
-                  <MDBCol sm="9">
-                    <MDBCardText className="text-muted">
-                      {user.user.email}
-                    </MDBCardText>
-                  </MDBCol>
-                </MDBRow>
-                <hr />
-                <MDBRow>
-                  <MDBCol sm="3">
-                    <MDBCardText>Mobile</MDBCardText>
-                  </MDBCol>
-                  <MDBCol sm="9">
-                    <MDBCardText className="text-muted">
-                      {user.user.phone}
-                    </MDBCardText>
-                  </MDBCol>
-                </MDBRow>
-                <hr />
-                <MDBRow>
-                  <MDBCol sm="3">
-                    <MDBCardText>Address</MDBCardText>
-                  </MDBCol>
-                  <MDBCol sm="9">
-                    <MDBCardText className="text-muted">
-                      {user.user.address1}&nbsp; {user.user.address2}
-                    </MDBCardText>
-                  </MDBCol>
-                </MDBRow>
-              </MDBCardBody>
-            </MDBCard>
+  const [orders, setOrders] = useState([]);
+  const orderFunc = async () => {
+    const response = await makeRequestAuth("myorders");
+    return response;
+  };
+  useEffect(() => {
+    orderFunc()
+      .then((data) => {
+        setOrders(()=>data.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
 
-            <MDBRow>
-              <MDBCol md="6">
-                <MDBCard className="mb-4 mb-md-0">
-                  <MDBCardBody>
-                    <MDBCardText className="mb-4">
-                      <span className="text-primary font-italic me-1">
-                        Orders
-                      </span>{" "}
-                      Placed
-                    </MDBCardText>
-                    <MDBCardText
-                      className="mb-1"
-                      style={{ fontSize: ".77rem" }}
-                    >
-                      Order 1
-                    </MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={80} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-                  </MDBCardBody>
-                </MDBCard>
-              </MDBCol>
-            </MDBRow>
-          </MDBCol>
-        </MDBRow>
-      </MDBContainer>
-    </section>
+  console.log("-----------",orders);
+
+  return (
+    <div className="profile-page">
+      <div className="profile-section">
+        <h1>My Profile</h1>
+        <div className="profile-info">
+          <div className="user-details">
+            <h2>{user.user.username}</h2>
+            <p>Email: {user.user.email}</p>
+            <p>Phone: {user.user.phone}</p>
+            <p>Location: {`${user.user.address1} ${user.user.address2}`}</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="order-section">
+        <h1>Orders</h1>
+        <table className="order-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>OrderId</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders.map((order, i) => (
+              <tr key={order.id}>
+                <td>{i + 1}</td>
+                <td>{order.orderId}</td>
+                <td>₹{order.orderSelling}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 };
 
-export default UserDashBoard;
+export default ProfilePage;
