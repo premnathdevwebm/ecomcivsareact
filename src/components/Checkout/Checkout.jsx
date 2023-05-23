@@ -21,7 +21,7 @@ import Divider from "@mui/material/Divider";
 import "./Checkout.scss";
 import { makeStyles } from "@material-ui/core/styles";
 import { Context } from "../../utils/context";
-import { makePaymentRequest } from "../../utils/api";
+import { makeRequestAuth } from "../../utils/api";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
@@ -40,53 +40,47 @@ const style = {
 };
 
 const CheckoutForm = () => {
-  const { cartItems, setCartItems, wishItems, setWishItems, cartSubTotal } =
-    useContext(Context);
+  const { user, cartItems, setCartItems, cartSubTotal } = useContext(Context);
   const classes = useStyles();
   const stripe = useStripe();
   const elements = useElements();
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address1, setAddress1] = useState("");
-  const [address2, setAddress2] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [country, setCountry] = useState("");
-  const [zip, setZip] = useState("");
+  const [name, setName] = useState(user?.user?.username ?? "");
+  const [email, setEmail] = useState(user?.user?.email ?? "");
+  const [phone, setPhone] = useState(user?.user?.phone ?? "");
+  const [address1, setAddress1] = useState(user?.user?.address1 ?? "");
+  const [address2, setAddress2] = useState(user?.user?.address2 ?? "");
+  const [city, setCity] = useState(user?.user?.city ?? "");
+  const [state, setState] = useState(user?.user?.state ?? "");
+  const [country, setCountry] = useState(user?.user?.country ?? "");
+  const [zip, setZip] = useState(user?.user?.zipcode ?? "");
   const [isProcessing, setIsProcessing] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [useCashOnDelivery, setUseCashOnDelivery] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     if (!stripe || !elements) {
       return;
     }
-
     setIsProcessing(true);
+    const cartItemsTemps = [...cartItems].map((ele) => ({
+      productId: ele.id,
+      orderName: ele.attributes.title,
+      orderSku: ele.attributes.SKU,
+      units: ele.quantity,
+      orderSelling: ele.attributes.sellingPrice,
+      orderType: "singleContainer",
+    }));
     if (useCashOnDelivery) {
       // Handle cash on delivery
-      await makePaymentRequest.post("/api/orders", {
-        cartItems,
+
+      await makeRequestAuth.post("/orderplace", {
+        cartItems: cartItemsTemps,
         cartSubTotal,
         paymentConfirmation: "COD",
-        name,
-        email,
-        phone,
-        address1,
-        address2,
-        city,
-        state,
-        country,
-        zip,
-        length: 20,
-        breadth: 5,
-        height: 10,
-        weight: 1,
       });
+
       setIsProcessing(false);
       setCartItems(() => []);
     } else {
@@ -108,14 +102,14 @@ const CheckoutForm = () => {
       } else {
         // Send the payment method to your server to complete the transaction
         setIsProcessing(false);
-        const paymnentIntent = await makePaymentRequest.post("/create-charge", {
+        const paymnentIntent = await makeRequestAuth.post("/create-charge", {
           payment_method_id: paymentMethod.id,
           amount: cartSubTotal * 100, // in cents
           currency: "inr",
-          description: `order on ${cartItems[0].data.name}`,
+          description: `order on placed`,
         });
         const paymentConfirmation = await stripe.confirmCardPayment(
-          paymnentIntent.data.response,
+          paymnentIntent.data,
           {
             payment_method: {
               card: cardElement,
@@ -124,27 +118,16 @@ const CheckoutForm = () => {
         );
         cardElement.clear();
         if (paymentConfirmation.paymentIntent.status === "succeeded") {
-          await makePaymentRequest.post("/api/orders", {
-            cartItems,
+          await makeRequestAuth.post("/orderplace", {
+            cartItems: cartItemsTemps,
             cartSubTotal,
             paymentConfirmation,
-            name,
-            email,
-            phone,
-            address1,
-            address2,
-            city,
-            state,
-            country,
-            zip,
-            length: 20,
-            breadth: 5,
-            height: 10,
-            weight: 1,
           });
         }
-        setCartItems(() => []);
       }
+
+      setIsProcessing(false);
+      setCartItems(() => []);
     }
   };
 
@@ -229,7 +212,7 @@ const CheckoutForm = () => {
             </Grid>
             {!useCashOnDelivery && (
               <Grid item xs={12}>
-                <CardElement />
+                <CardElement className="cardElement" />
               </Grid>
             )}
             {errorMessage && (
@@ -276,12 +259,22 @@ const CheckoutForm = () => {
           <List sx={style} component="nav">
             <ListItem>
               <ListItemText primary="YOUR ORDER" />
-              <ListItemText primary={`${cartItems[0].data.name}`} />
-            </ListItem>
-            <Divider />
-            <ListItem divider>
-              <ListItemText primary="Sub Total" />
-              <ListItemText primary={`${cartSubTotal}`} />
+              {cartItems.map((ele) => {
+                return (
+                  <ListItem key={ele.id}>
+                    <ListItemText primary={`${ele.attributes.title}`} />
+                    <Divider />
+                    <ListItem divider>
+                      <ListItemText primary="Sub Total" />
+                      <ListItemText
+                        primary={`${
+                          ele.attributes.sellingPrice * ele.quantity
+                        }`}
+                      />
+                    </ListItem>
+                  </ListItem>
+                );
+              })}
             </ListItem>
             <ListItem>
               <ListItemText primary="Shipping" />

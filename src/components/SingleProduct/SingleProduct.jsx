@@ -11,7 +11,7 @@ import {
   FaLinkedinIn,
   FaPinterest,
   FaCartPlus,
-  FaRegHeart
+  FaRegHeart,
 } from "react-icons/fa";
 import "./SingleProduct.scss";
 
@@ -19,7 +19,7 @@ const SingleProduct = () => {
   const [quantity, setQuantity] = useState(1);
   const { id } = useParams();
   const { handleAddToCart, handleAddToWish } = useContext(Context);
-  const { data } = useFetch(`/api/products/${id}`);
+  const { data } = useFetch(`/products/sku/${id}`);
   const decrement = () => {
     setQuantity((prevState) => {
       if (prevState === 1) return 1;
@@ -31,21 +31,21 @@ const SingleProduct = () => {
   };
 
   if (!data) return;
-  const product = data.data;
+  const product = data.data[0];
   return (
     <div className="single-product-main-content">
       <div className="layout">
         <div className="single-product-page">
           <div className="left">
-            <ReactImageMagnify img={product.secure_url} />
+            <ReactImageMagnify img={product.attributes.imageSrc} />
           </div>
           <div className="right">
-            <span className="name">{product.name}</span>
+            <span className="name">{product.attributes?.title}</span>
             <span className="price">
-              Price &nbsp;&#8377;{product.offerprice}
+              Price &nbsp;&#8377;{product.attributes?.sellingPrice}
             </span>
-            <span className="strikeprice">MRP &nbsp;&#8377;{product.mrp}</span>
-            <span className="category">Category &nbsp;{product.Category}</span>
+            <span className="strikeprice">MRP &nbsp;&#8377;{product.attributes?.mrpPrice}</span>
+            <span className="category">Category &nbsp;{product.attributes?.Category}</span>
 
             <div className="cart-buttons">
               <div className="quantity-buttons">
@@ -56,17 +56,18 @@ const SingleProduct = () => {
               <button
                 className="add-to-cart-button"
                 onClick={() => {
-                  handleAddToCart(data, quantity);
+                  handleAddToCart(product, quantity);
                   setQuantity(1);
                 }}
               >
                 <FaCartPlus size={20} />
                 ADD TO CART
-              </button>&nbsp;&nbsp;
+              </button>
+              &nbsp;&nbsp;
               <button
                 className="add-to-wish-button"
                 onClick={() => {
-                  handleAddToWish(data, quantity);
+                  handleAddToWish(product, quantity);
                   setQuantity(1);
                 }}
               >
@@ -78,7 +79,7 @@ const SingleProduct = () => {
             <span className="divider" />
             <div className="info-item">
               <span className="text-bold">
-                Name: <span>{product.name}</span>
+                Name: <span>{product.attributes?.title}</span>
               </span>
               <span className="text-bold">
                 Share:

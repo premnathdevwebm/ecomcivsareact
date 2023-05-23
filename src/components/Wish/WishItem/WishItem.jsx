@@ -10,18 +10,17 @@ const WishItem = () => {
   return (
     <div className="cart-products">
       {wishItems?.map((item) => {
-        item = {attributes:item.attributes, ...item.data}
         return (
-          <div className="search-result-item" key={item?.id ?? item?.SKU} onClick={() => {}}>
+          <div className="search-result-item" key={item?.id} onClick={() => {}}>
             <div className="image-container">
               <img
                 src={
-                  item.secure_url
+                  item.attributes.imageSrc
                 }
               />
             </div>
             <div className="prod-details">
-              <span className="name">{item.name}</span>
+              <span className="name">{item.attributes.title}</span>
               <MdClose
                 className="close-btn"
                 onClick={() => handleRemoveFromWish(item)}
@@ -30,17 +29,17 @@ const WishItem = () => {
                 <span onClick={() => handleWishProductQuantity("dec", item)}>
                   -
                 </span>
-                <span>{item.attributes.quantity}</span>
+                <span>{item.quantity}</span>
                 <span onClick={() => handleWishProductQuantity("inc", item)}>
                   +
                 </span>
               </div>
               <div className="text">
-                <span>{item.attributes.quantity}</span>
+                <span>{item.quantity}</span>
                 <span>x</span>
                 <span className="highlight">
                   <span>&#8377;</span>
-                  {item.offerprice * item.attributes.quantity}
+                  {item.attributes.sellingPrice * item.quantity}
                 </span>
               </div>
             </div>

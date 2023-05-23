@@ -7,12 +7,24 @@ import WishItem from "./WishItem/WishItem";
 import "./Wish.scss";
 
 const Wish = () => {
-  const { wishItems, setWishItems, setCartSubTotal, setCartItems, setShowWish, cartSubTotal } =
-    useContext(Context);
+  const {
+    wishItems,
+    setWishItems,
+    setCartSubTotal,
+    setCartItems,
+    setShowWish,
+    cartSubTotal,
+  } = useContext(Context);
 
   const handleAddToCart = () => {
-    setCartItems(() => [...wishItems]);
-    setCartSubTotal(()=>[...wishItems].reduce((accumulator, currentValue)=>accumulator + currentValue.data.offerprice, 0))
+    setCartItems((ele) => [...ele, ...wishItems]);
+    setCartSubTotal(() =>
+      [...wishItems].reduce(
+        (accumulator, currentValue) =>
+          accumulator + currentValue.attributes.sellingPrice * currentValue.quantity,
+        0
+      )
+    );
     setWishItems(() => []);
     setShowWish(() => false);
   };

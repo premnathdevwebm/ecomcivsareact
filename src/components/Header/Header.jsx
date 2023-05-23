@@ -70,7 +70,7 @@ const Header = () => {
               {!!cartCount && <span>{cartCount}</span>}
             </span>
             <span className="cart-icon">
-              <FaUserCircle />
+              <FaUserCircle onClick={() => navigate("/auth")} />
             </span>
           </div>
         </div>

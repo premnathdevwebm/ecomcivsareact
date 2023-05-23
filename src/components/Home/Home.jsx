@@ -16,13 +16,13 @@ const Home = () => {
     }, []);
 
     const getProducts = () => {
-        fetchDataFromApi("/api/products/popular").then((res) => {
-            setProducts(res);
+        fetchDataFromApi("/products/popular").then((res) => {
+            setProducts(res.data);
         });
     };
     const getNewProducts = () => {
-        fetchDataFromApi("/api/products/new").then((res) => {
-            setNewProducts(res);
+        fetchDataFromApi("/products/new").then((res) => {
+            setNewProducts(res.data);
         });
     };
 

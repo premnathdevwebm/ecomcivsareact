@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 export const Context = createContext();
 
 const AppContext = ({ children }) => {
+  const [user, setUser] = useState({ user: undefined, isLoading: false });
   const [categories, setCategories] = useState();
   const [products, setProducts] = useState();
   const [newProducts, setNewProducts] = useState();
@@ -23,37 +24,41 @@ const AppContext = ({ children }) => {
 
   useEffect(() => {
     let count = 0;
-    cartItems?.map((item) => (count += item.attributes.quantity));
+    cartItems?.map((item) => (count += item.quantity));
     setCartCount(count);
 
     let subTotal = 0;
     cartItems.map((item) => {
-      subTotal += item.data.offerprice * item.attributes.quantity;
+      subTotal += item.attributes.sellingPrice * item.quantity;
     });
     setCartSubTotal(subTotal);
   }, [cartItems]);
 
   useEffect(() => {
     let count = 0;
-    wishItems?.map((item) => (count += item.attributes.quantity));
+    wishItems?.map((item) => {
+      count += item.quantity;
+    });
     setWishCount(count);
     let subTotal = 0;
     wishItems.map((item) => {
-      subTotal += item.data.offerprice * item.attributes.quantity;
+      subTotal += item.attributes.sellingPrice * item.quantity;
     });
     setCartSubTotal(subTotal);
   }, [wishItems]);
 
+  const handleUser = ({ user, loading }) => {
+    setUser(() => ({ user, isLoading: loading }));
+  };
+
   const handleAddToCart = (product, quantity) => {
     let items = [...cartItems];
-
     let index = items?.findIndex((p) => p.id === product?.id);
     if (index !== -1) {
-      items[index].attributes.quantity += quantity;
+      items[index].quantity += quantity;
     } else {
-      product = { ...product, attributes: { quantity: 0 } };
-      product.attributes.quantity = quantity;
-      items = [...items, product];
+      const tempProduct = { ...product, quantity };
+      items = [...items, tempProduct];
     }
     setCartItems(items);
   };
@@ -62,11 +67,10 @@ const AppContext = ({ children }) => {
     let items = [...wishItems];
     let index = items?.findIndex((p) => p.id === product?.id);
     if (index !== -1) {
-      items[index].attributes.quantity += quantity;
+      items[index].quantity += quantity;
     } else {
-      product = { ...product, attributes: { quantity: 0 } };
-      product.attributes.quantity = quantity;
-      items = [...items, product];
+      const tempProduct = { ...product, quantity };
+      items = [...items, tempProduct];
     }
     setWishItems(items);
   };
@@ -87,10 +91,10 @@ const AppContext = ({ children }) => {
     let items = [...cartItems];
     let index = items?.findIndex((p) => p.id === product?.id);
     if (type === "inc") {
-      items[index].attributes.quantity += 1;
+      items[index].quantity += 1;
     } else if (type === "dec") {
-      if (items[index].attributes.quantity === 1) return;
-      items[index].attributes.quantity -= 1;
+      if (items[index].quantity === 1) return;
+      items[index].quantity -= 1;
     }
     setCartItems(items);
   };
@@ -99,10 +103,10 @@ const AppContext = ({ children }) => {
     let items = [...wishItems];
     let index = items?.findIndex((p) => p.id === product?.id);
     if (type === "inc") {
-      items[index].attributes.quantity += 1;
+      items[index].quantity += 1;
     } else if (type === "dec") {
-      if (items[index].attributes.quantity === 1) return;
-      items[index].attributes.quantity -= 1;
+      if (items[index].quantity === 1) return;
+      items[index].quantity -= 1;
     }
     setWishItems(items);
   };
@@ -110,6 +114,8 @@ const AppContext = ({ children }) => {
   return (
     <Context.Provider
       value={{
+        user,
+        handleUser,
         products,
         setProducts,
         newProducts,

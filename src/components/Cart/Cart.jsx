@@ -5,7 +5,6 @@ import { Context } from "../../utils/context";
 import CartItem from "./CartItem/CartItem";
 import { useNavigate } from "react-router-dom";
 
-
 import "./Cart.scss";
 
 const Cart = () => {
@@ -16,7 +15,7 @@ const Cart = () => {
     setCartSubTotal(() =>
       [...cartItems].reduce(
         (accumulator, currentValue) =>
-          accumulator + currentValue.data.offerprice,
+          accumulator + currentValue.attributes.sellingPrice * currentValue.quantity,
         0
       )
     );

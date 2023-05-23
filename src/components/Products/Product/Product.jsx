@@ -8,16 +8,16 @@ const Product = ({ data, id }) => {
     <div className="product-card" onClick={() => navigate("/product/" + id)}>
       <div className="thumbnail">
         <img
-          src={data.img.url}
+          src={data.attributes.imageSrc}
           alt=""
         />
       </div>
       <div className="prod-details">
-        <span className="name">{data.name}</span>
+        <span className="name">{data.attributes.title}</span>
         <span className="price">
-          Price&nbsp;&#8377;{data.offerprice}&nbsp;&nbsp;
+          Price&nbsp;&#8377;{data.attributes.sellingPrice}&nbsp;&nbsp;
         </span>
-        <span className="pricestrike">MRP&nbsp;&#8377;{data.mrp}</span>
+        <span className="pricestrike">MRP&nbsp;&#8377;{data.attributes.mrpPrice}</span>
       </div>
     </div>
   );

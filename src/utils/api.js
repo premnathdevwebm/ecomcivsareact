@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getToken } from "./helpers";
 
 export const fetchDataFromApi = async (url) => {
   try {
@@ -10,9 +11,17 @@ export const fetchDataFromApi = async (url) => {
   }
 };
 
-export const makePaymentRequest = axios.create({
+export const makeRequest = axios.create({
   baseURL: process.env.REACT_APP_DEV_URL,
   headers: {
     "Content-Type": "application/json",
+  },
+});
+
+export const makeRequestAuth =  axios.create({
+  baseURL: process.env.REACT_APP_DEV_URL,
+  headers: {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${getToken()}`
   },
 });
