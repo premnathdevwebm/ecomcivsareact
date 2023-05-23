@@ -1,165 +1,172 @@
 import { useState, useContext } from "react";
-import "./User.scss";
+import "./Register.scss";
 import { makeRequest } from "../../utils/api";
 import { setToken } from "../../utils/helpers";
 import { Context } from "../../utils/context";
 
-
 const Register = ({ setLogin }) => {
-  const { handleUser } =
-    useContext(Context);
-  const [loggedUser, setLoggedUser] = useState({
-    username: "",
-    email: "",
-    password: "",
-    phone: "",
-    address1: "",
-    address2: "",
-    city: "",
-    state: "",
-    country: "",
-    zipcode: "",
-  });
-  async function registerUser(event) {
-    event.preventDefault();
+  const { handleUser } = useContext(Context);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address1, setAddress1] = useState("");
+  const [address2, setAddress2] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [country, setCountry] = useState("");
+  const [zipcode, setZipcode] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-       const response = await makeRequest.post('auth/local/register', { ...loggedUser, confirmed: true, blocked: false })
-       handleUser({user: {...response.data.user}, loading: false})
-       setToken(response.data.jwt)
+      const response = await makeRequest.post("auth/local/register", {
+        ...{
+          username,
+          email,
+          password,
+          phone,
+          address1,
+          address2,
+          city,
+          state,
+          country,
+          zipcode,
+        },
+        confirmed: true,
+        blocked: false,
+      });
+      handleUser({ user: { ...response.data.user }, loading: false });
+      setToken(response.data.jwt);
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   return (
-    <>
-      <div className="container1">
-        <div className="illustration">
-          <img className="rectangleIcon" alt="" src="/rectangle@2x.png" />
-          <div className="turnYourIdeas">
-            Empowering Lives, Embracing Wellness.
-          </div>
-          <img className="illustrationChild2" alt="" src="/group-2.svg" />
-        </div>
+    <div className="register-container">
+      <h2 className="register-title">Register</h2>
+      <form className="register-form" onSubmit={handleSubmit}>
+        <label htmlFor="username" className="register-label">
+          Username:
+        </label>
+        <input
+          type="text"
+          id="username"
+          className="register-input"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
+        <label htmlFor="email" className="register-label">
+          Email:
+        </label>
+        <input
+          type="email"
+          id="email"
+          className="register-input"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <label htmlFor="password" className="register-label">
+          Password:
+        </label>
+        <input
+          type="password"
+          id="password"
+          className="register-input"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <label htmlFor="phone" className="register-label">
+          Phone:
+        </label>
+        <input
+          type="tel"
+          id="phone"
+          className="register-input"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          required
+        />
+        <label htmlFor="address1" className="register-label">
+          Address 1:
+        </label>
+        <input
+          type="text"
+          id="address1"
+          className="register-input"
+          value={address1}
+          onChange={(e) => setAddress1(e.target.value)}
+          required
+        />
+        <label htmlFor="address2" className="register-label">
+          Address 2:
+        </label>
+        <input
+          type="text"
+          id="address2"
+          className="register-input"
+          value={address2}
+          onChange={(e) => setAddress2(e.target.value)}
+        />
+        <label htmlFor="city" className="register-label">
+          City/Town:
+        </label>
+        <input
+          type="text"
+          id="city"
+          className="register-input"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          required
+        />
+        <label htmlFor="state" className="register-label">
+          State:
+        </label>
+        <input
+          type="text"
+          id="state"
+          className="register-input"
+          value={state}
+          onChange={(e) => setState(e.target.value)}
+          required
+        />
+        <label htmlFor="country" className="register-label">
+          Country:
+        </label>
+        <input
+          type="text"
+          id="country"
+          className="register-input"
+          value={country}
+          onChange={(e) => setCountry(e.target.value)}
+          required
+        />
+        <label htmlFor="zipcode" className="register-label">
+          Zip Code:
+        </label>
+        <input
+          type="text"
+          id="zipcode"
+          className="register-input"
+          value={zipcode}
+          onChange={(e) => setZipcode(e.target.value)}
+          required
+        />
+        <button type="submit" className="register-button">
+          Register
+        </button>
+      </form>
+      <div>
+        Already have an account?
+        <button onClick={() => setLogin(() => true)} className="logBtn">
+          Login
+        </button>
       </div>
-      <div className="contentWrapper">
-        <div className="frameParent">
-          <form>
-            <label htmlFor="username">UserName</label>
-            <input
-              id="username"
-              name="username"
-              value={loggedUser.username}
-              onChange={(event) =>
-                setLoggedUser((e) => ({ ...e, username: event.target.value }))
-              }
-            />
-            <br />
-            <label htmlFor="email">Email</label>
-            <input
-              id="email"
-              name="email"
-              value={loggedUser.email}
-              onChange={(event) =>
-                setLoggedUser((e) => ({ ...e, email: event.target.value }))
-              }
-            />
-            <br />
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              value={loggedUser.password}
-              onChange={(event) =>
-                setLoggedUser((e) => ({ ...e, password: event.target.value }))
-              }
-            />
-            <br />
-            <label htmlFor="phone">Phone</label>
-            <input
-              id="phone"
-              name="phone"
-              value={loggedUser.phone}
-              onChange={(event) =>
-                setLoggedUser((e) => ({ ...e, phone: event.target.value }))
-              }
-            />
-            <br />
-            <label htmlFor="address1">Address1</label>
-            <input
-              id="address1"
-              name="address1"
-              value={loggedUser.address1}
-              onChange={(event) =>
-                setLoggedUser((e) => ({ ...e, address1: event.target.value }))
-              }
-            />
-            <br />
-            <label htmlFor="address">Address2</label>
-            <input
-              id="address2"
-              name="address2"
-              value={loggedUser.address2}
-              onChange={(event) =>
-                setLoggedUser((e) => ({ ...e, address2: event.target.value }))
-              }
-            />
-            <br />
-            <label htmlFor="city">City/Town</label>
-            <input
-              id="city"
-              name="city"
-              value={loggedUser.city}
-              onChange={(event) =>
-                setLoggedUser((e) => ({ ...e, city: event.target.value }))
-              }
-            />
-            <br />
-            <label htmlFor="state">State</label>
-            <input
-              id="state"
-              name="state"
-              value={loggedUser.state}
-              onChange={(event) =>
-                setLoggedUser((e) => ({ ...e, state: event.target.value }))
-              }
-            />
-            <br />
-            <label htmlFor="country">Country</label>
-            <input
-              id="country"
-              name="country"
-              value={loggedUser.country}
-              onChange={(event) =>
-                setLoggedUser((e) => ({ ...e, country: event.target.value }))
-              }
-            />
-            <br />
-            <label htmlFor="zip">ZIP</label>
-            <input
-              id="zip"
-              name="zip"
-              value={loggedUser.zipcode}
-              onChange={(event) =>
-                setLoggedUser((e) => ({ ...e, zipcode: event.target.value }))
-              }
-            />
-            <br />
-            <button onClick={registerUser} className="submitBtn" type="submit">
-              Register
-            </button>
-          </form>
-          <div>
-            Already have an account?
-            <button onClick={() => setLogin(() => true)} className="logBtn">
-              Sign In
-            </button>
-          </div>
-        </div>
-      </div>
-    </>
+    </div>
   );
 };
-
 export default Register;

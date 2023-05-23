@@ -1,97 +1,61 @@
-import { useState, useContext } from "react";
-import { useGoogleLogin } from "@react-oauth/google";
-import "./User.scss";
+import React, { useState, useContext } from "react";
+import "./Login.scss";
 import { makeRequest } from "../../utils/api";
 import { setToken } from "../../utils/helpers";
 import { Context } from "../../utils/context";
 
 const Login = ({ setLogin }) => {
-  const { handleUser } =
-    useContext(Context);
+  const { handleUser } = useContext(Context);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleSuccess = (response) => {
-    console.log('Successful sign-in:', response);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await makeRequest.post("/auth/local", {
+      identifier: email,
+      password: password,
+    });
+    handleUser({ user: { ...response.data.user }, loading: false });
+    setToken(response.data.jwt);
   };
-
-  const handleFailure = (error) => {
-    console.error('Sign-in failure:', error);
-  };
-
-  const signIn = useGoogleLogin({
-    redirectUri: 'https://ecommerce2-2usx.onrender.com/api/connect/google/callback',
-    onSignInSuccess: handleSuccess,
-    onSignInError: handleFailure,
-  });
-
-  const handleSignIn = () => {
-    console.log(signIn);;
-  };
-
-  const [loggedUser, setLoggedUser] = useState({
-    email: "",
-    password: "",
-  });
-  async function loginUser(event) {
-    event.preventDefault();
-    try {
-       const response = await makeRequest.post('/auth/local', { identifier: loggedUser.email,password: loggedUser.password  })
-       handleUser({user: {...response.data.user}, loading: false})
-       setToken(response.data.jwt)
-    } catch (err) {
-      console.log(err);
-    }
-     
-  }
 
   return (
-    <>
-      <div className="container1">
-        <div className="illustration">
-          <img className="rectangleIcon" alt="" src="/rectangle@2x.png" />
-          <div className="turnYourIdeas">
-            Empowering Lives, Embracing Wellness.
-          </div>
-          <img className="illustrationChild2" alt="" src="/group-2.svg" />
-        </div>
+    <div className="login-container">
+      <h2 className="login-title">Login</h2>
+      <form className="login-form" onSubmit={handleSubmit}>
+        <label htmlFor="email" className="login-label">
+          Email:
+        </label>
+        <input
+          type="email"
+          id="email"
+          className="login-input"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <label htmlFor="password" className="login-label">
+          Password:
+        </label>
+        <input
+          type="password"
+          id="password"
+          className="login-input"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <button type="submit" className="login-button">
+          Login
+        </button>
+      </form>
+      <div>
+        Dont have an account?
+        <button onClick={() => setLogin(() => false)} className="logBtn">
+          Register
+        </button>
       </div>
-      <div className="contentWrapper">
-        <div className="frameParent">
-          <form>
-            <label htmlFor="email">Email</label>
-            <input
-              id="email"
-              name="email"
-              value={loggedUser.email}
-              onChange={(event) =>
-                setLoggedUser((e) => ({ ...e, email: event.target.value }))
-              }
-            />
-            <br />
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              value={loggedUser.password}
-              onChange={(event) =>
-                setLoggedUser((e) => ({ ...e, password: event.target.value }))
-              }
-            />
-            <br />
-            <button onClick={loginUser} className="submitBtn" type="submit">
-              Login
-            </button>
-          </form>
-          <button onClick={handleSignIn}>Google</button>
-          <div>
-            Dont have an account?
-            <button onClick={() => setLogin(() => false)} className="logBtn">
-              Register
-            </button>
-          </div>
-        </div>
-      </div>
-    </>
+    </div>
   );
 };
 
