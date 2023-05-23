@@ -14,6 +14,7 @@ const Banner = () => {
                     - WELLNESS AND BEYOND<br />
                     Nurture your mind, body, and soul with our wellness brand
                     </p>
+                    <p>Gear Up! Launch sale starts at 10pm on Thursday 01/06/2023!</p>
                     <div className="ctas">
                         <div className="banner-cta v2" onClick={() => navigate("/shop")}>Shop Now</div>
                     </div>
