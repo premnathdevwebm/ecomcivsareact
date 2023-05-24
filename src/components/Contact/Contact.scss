@@ -1,0 +1,46 @@
+.contact-us-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  input,
+  textarea {
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .contact-details {
+    text-align: center;
+  }
+  
+  .contact-details h3 {
+    margin-bottom: 10px;
+  }
+  
+  .contact-details p {
+    margin-bottom: 5px;
+  }
+
+  .contactContainRow{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
