@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import "./NewProducts.scss";
+import ImageWithOverlay from "../../ImageComp/ImageComp";
 
 const NewProducts = ({ newProducts, headingText }) => {
   console.log(newProducts);
@@ -15,7 +16,7 @@ const NewProducts = ({ newProducts, headingText }) => {
             onClick={() => navigate(`/product/${item.attributes.SKU}`)}
           >
             <h2>{item.attributes.title}</h2>
-            <img src={item.attributes.imageSrc} alt="" />
+            <ImageWithOverlay imageUrl={item.attributes.imageSrc}  />
             <p>
               Sell Price&nbsp;&#8377;{item.attributes.sellingPrice}&nbsp;&nbsp;{" "}
               <span> MRP&nbsp;&#8377;{item.attributes.mrpPrice}</span>

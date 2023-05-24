@@ -2,14 +2,15 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./Product.scss";
 
+import ImageWithOverlay from "../../ImageComp/ImageComp";
+
 const Product = ({ data, id }) => {
   const navigate = useNavigate();
   return (
     <div className="product-card" onClick={() => navigate("/product/" + id)}>
       <div className="thumbnail">
-        <img
-          src={data.attributes.imageSrc}
-          alt=""
+        <ImageWithOverlay
+          imageUrl={data.attributes.imageSrc}
         />
       </div>
       <div className="prod-details">
