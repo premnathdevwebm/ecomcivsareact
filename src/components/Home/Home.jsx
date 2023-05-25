@@ -13,6 +13,7 @@ const Home = () => {
     useEffect(() => {
         getProducts();
         getNewProducts();
+        getLovedProducts()
     }, []);
 
     const getProducts = () => {
@@ -25,14 +26,18 @@ const Home = () => {
             setNewProducts(res.data);
         });
     };
-
+    const getLovedProducts = ()=>{
+         fetchDataFromApi("/products/loved").then((res) => {
+            setLovedProduct(res.data);
+        });
+    }
     return (
         <div>
             <Banner />
             <Attraction />
             <div className="main-content">
                 <div className="layout">
-                    <NewProducts headingText="New Arrival" newProducts={newProducts} mostLoved={newProducts} />
+                    <NewProducts headingText="New Arrival" newProducts={newProducts} mostLoved={lovedProduct} />
                     <Products
                         headingText="Popular Products"
                         products={products}

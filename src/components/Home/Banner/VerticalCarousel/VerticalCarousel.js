@@ -3,8 +3,8 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import "./VerticalCarousel.scss";
 import image1 from "../../../../assets/banner-img.png";
-import image2 from "../../../../assets/banner2.jpg";
-import image3 from "../../../../assets/banner-img.png";
+import image2 from "../../../../assets/product-1.png";
+import image3 from "../../../../assets/product-2.png";
 
 const VerticalCarousel = () => {
 
@@ -26,7 +26,7 @@ const VerticalCarousel = () => {
         <Slider {...carouselSettings}>
           {images.map((image, index) => (
             <div key={index}>
-              <img src={image} alt={`Image ${index + 1}`} />
+              <img src={image} height={"593px"} alt={`banner ${index + 1}`} />
             </div>
           ))}
         </Slider>

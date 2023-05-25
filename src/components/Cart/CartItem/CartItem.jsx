@@ -10,16 +10,16 @@ const CartItem = () => {
     <div className="cart-products">
       {cartItems?.map((item) => {
         return (
-          <div className="search-result-item" key={item?.id} onClick={() => {}}>
+          <div className="search-result-item" key={`${item?.id} ${item.pack}`} onClick={() => {}}>
             <div className="image-container">
               <img
                 src={
-                  item.attributes.imageSrc
+                  item.attributes[item.pack].imageSrc
                 }
               />
             </div>
             <div className="prod-details">
-              <span className="name">{item.attributes.title}</span>
+              <span className="name">{item.attributes[item.pack].title}</span>
               <MdClose
                 className="close-btn"
                 onClick={() => handleRemoveFromCart(item)}
@@ -38,7 +38,7 @@ const CartItem = () => {
                 <span>x</span>
                 <span className="highlight">
                   <span>&#8377;</span>
-                  {item.attributes.sellingPrice * item.quantity}
+                  {item.attributes[item.pack].salePrice * item.quantity}
                 </span>
               </div>
             </div>

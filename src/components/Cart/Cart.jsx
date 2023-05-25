@@ -15,7 +15,7 @@ const Cart = () => {
     setCartSubTotal(() =>
       [...cartItems].reduce(
         (accumulator, currentValue) =>
-          accumulator + currentValue.attributes.sellingPrice * currentValue.quantity,
+          accumulator + currentValue.attributes[currentValue.pack].salePrice * currentValue.quantity,
         0
       )
     );

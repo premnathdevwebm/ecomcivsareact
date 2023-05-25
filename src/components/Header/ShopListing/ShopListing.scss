@@ -1,0 +1,26 @@
+.menuList {
+    display: inline-block;
+    position: relative;
+    height: 100%;
+    cursor: pointer;
+    background-color: #fff;
+    ul {
+      position: fixed;
+      list-style: none;
+      top: 65%;
+      left: 10%;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
+      padding: 10px;
+      border-radius: 4px;
+      z-index: 100;
+  
+      li {
+        margin: 5px;
+        vertical-align: top;
+        &:hover{
+            background-color: #ff4343;
+        }
+      }
+    }
+  }

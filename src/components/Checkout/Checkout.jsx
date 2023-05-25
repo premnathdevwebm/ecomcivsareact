@@ -66,11 +66,11 @@ const CheckoutForm = () => {
     setIsProcessing(true);
     const cartItemsTemps = [...cartItems].map((ele) => ({
       productId: ele.id,
-      orderName: ele.attributes.title,
+      orderName: ele.attributes[ele.pack].title,
       orderSku: ele.attributes.SKU,
       units: ele.quantity,
-      orderSelling: ele.attributes.sellingPrice,
-      orderType: "singleContainer",
+      orderSelling: ele.attributes[ele.pack].salePrice,
+      orderType: ele.pack,
     }));
     if (useCashOnDelivery) {
       // Handle cash on delivery
@@ -262,13 +262,13 @@ const CheckoutForm = () => {
               {cartItems.map((ele) => {
                 return (
                   <ListItem key={ele.id}>
-                    <ListItemText primary={`${ele.attributes.title}`} />
+                    <ListItemText primary={`${ele.attributes[ele.pack].title}`} />
                     <Divider />
                     <ListItem divider>
                       <ListItemText primary="Sub Total" />
                       <ListItemText
                         primary={`${
-                          ele.attributes.sellingPrice * ele.quantity
+                          ele.attributes[ele.pack].salePrice * ele.quantity
                         }`}
                       />
                     </ListItem>

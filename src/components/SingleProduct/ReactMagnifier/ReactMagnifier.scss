@@ -24,4 +24,8 @@
   .main-image-container {
     flex: 1;
     margin-left: 20px;
+    .ReactImageMagnifyLens {
+      width: 150px;  
+      height: 10px;  
+    }
   }

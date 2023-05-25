@@ -30,7 +30,7 @@ const AppContext = ({ children }) => {
 
     let subTotal = 0;
     cartItems.map((item) => {
-      subTotal += item.attributes.sellingPrice * item.quantity;
+      subTotal += item.attributes[item.pack].salePrice * item.quantity;
     });
     setCartSubTotal(subTotal);
   }, [cartItems]);
@@ -43,7 +43,7 @@ const AppContext = ({ children }) => {
     setWishCount(count);
     let subTotal = 0;
     wishItems.map((item) => {
-      subTotal += item.attributes.sellingPrice * item.quantity;
+      subTotal += item.attributes[item.pack].salePrice * item.quantity;
     });
     setCartSubTotal(subTotal);
   }, [wishItems]);
@@ -52,25 +52,29 @@ const AppContext = ({ children }) => {
     setUser(() => ({ user, isLoading: loading }));
   };
 
-  const handleAddToCart = (product, quantity) => {
+  const handleAddToCart = (product, quantity, pack) => {
     let items = [...cartItems];
-    let index = items?.findIndex((p) => p.id === product?.id);
+    let index = items?.findIndex(
+      (p) => p.id === product?.id && p.pack === pack
+    );
     if (index !== -1) {
       items[index].quantity += quantity;
     } else {
-      const tempProduct = { ...product, quantity };
+      const tempProduct = { ...product, quantity, pack };
       items = [...items, tempProduct];
     }
     setCartItems(items);
   };
 
-  const handleAddToWish = (product, quantity) => {
+  const handleAddToWish = (product, quantity, pack) => {
     let items = [...wishItems];
-    let index = items?.findIndex((p) => p.id === product?.id);
+    let index = items?.findIndex(
+      (p) => p.id === product?.id && p.pack === pack
+    );
     if (index !== -1) {
       items[index].quantity += quantity;
     } else {
-      const tempProduct = { ...product, quantity };
+      const tempProduct = { ...product, quantity, pack };
       items = [...items, tempProduct];
     }
     setWishItems(items);
@@ -78,19 +82,25 @@ const AppContext = ({ children }) => {
 
   const handleRemoveFromCart = (product) => {
     let items = [...cartItems];
-    items = items?.filter((p) => p.id !== product?.id);
+    items = items?.filter(
+      (p) => p.id !== product?.id || p.pack !== product.pack
+    );
     setCartItems(items);
   };
 
   const handleRemoveFromWish = (product) => {
     let items = [...wishItems];
-    items = items?.filter((p) => p.id !== product?.id);
+    items = items?.filter(
+      (p) => p.id !== product?.id || p.pack !== product.pack
+    );
     setWishItems(items);
   };
 
   const handleCartProductQuantity = (type, product) => {
     let items = [...cartItems];
-    let index = items?.findIndex((p) => p.id === product?.id);
+    let index = items?.findIndex(
+      (p) => p.id === product?.id && p.pack === product.pack
+    );
     if (type === "inc") {
       items[index].quantity += 1;
     } else if (type === "dec") {
@@ -102,7 +112,9 @@ const AppContext = ({ children }) => {
 
   const handleWishProductQuantity = (type, product) => {
     let items = [...wishItems];
-    let index = items?.findIndex((p) => p.id === product?.id);
+    let index = items?.findIndex(
+      (p) => p.id === product?.id && p.pack === product.pack
+    );
     if (type === "inc") {
       items[index].quantity += 1;
     } else if (type === "dec") {

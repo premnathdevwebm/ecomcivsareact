@@ -5,6 +5,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { CgShoppingCart } from "react-icons/cg";
 import { AiOutlineHeart } from "react-icons/ai";
 import "./Header.scss";
+import ShopList from "./ShopListing/ShopListing"
 import Search from "./Search/Search";
 import { Context } from "../../utils/context";
 import Cart from "../Cart/Cart";
@@ -38,7 +39,7 @@ const Header = () => {
           <ul className="left">
             <li onClick={() => navigate("/")}>Home</li>
             <li onClick={() => navigate("/about")}>About</li>
-            <li onClick={() => navigate("/shop")}>Shop</li>
+            <li onClick={() => navigate("/shop")}><ShopList /></li>
             <li onClick={() => navigate("/blog")}>Blog</li>
             <li onClick={() => navigate("/contact")}>Contact</li>
           </ul>

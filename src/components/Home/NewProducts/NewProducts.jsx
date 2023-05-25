@@ -3,8 +3,7 @@ import "./NewProducts.scss";
 import ImageWithOverlay from "../../ImageComp/ImageComp";
 import MostPreferedProduct from "../MostPreferedProduct/MostPreferedProduct";
 
-const NewProducts = ({ newProducts, headingText }) => {
-  console.log(newProducts);
+const NewProducts = ({ newProducts, headingText, mostLoved }) => {
   const navigate = useNavigate();
   return (
     <div className="shop-by-category">
@@ -17,7 +16,7 @@ const NewProducts = ({ newProducts, headingText }) => {
             className="category"
             onClick={() => navigate(`/product/${item.attributes.SKU}`)}
           >
-            <h2>{item.attributes.title}</h2>
+            <h2>{"Vegan Plant Protien"}</h2>
             <ImageWithOverlay imageUrl={item.attributes.imageSrc}  />
             <p>
               Selling Price&nbsp;&#8377;{item.attributes.sellingPrice}&nbsp;&nbsp;{" "}
@@ -28,7 +27,7 @@ const NewProducts = ({ newProducts, headingText }) => {
       </div>
       </div>
       <div className="content2">
-        <MostPreferedProduct />
+        <MostPreferedProduct lovedProduct={mostLoved} />
       </div>
     </div>
   );

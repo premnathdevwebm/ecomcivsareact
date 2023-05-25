@@ -1,0 +1,22 @@
+.tabs {
+    list-style-type: none;
+    padding: 0;
+    margin: 15px;
+    display: flex;
+  }
+  
+  .tabs li {
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #eee;
+  }
+  
+  .tabs li.active {
+    background-color: #ccc;
+  }
+  
+  .content {
+    margin-top: 10px;
+    padding: 20px;
+    border: 1px solid #ccc;
+  }

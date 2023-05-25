@@ -21,7 +21,7 @@ const Wish = () => {
     setCartSubTotal(() =>
       [...wishItems].reduce(
         (accumulator, currentValue) =>
-          accumulator + currentValue.attributes.sellingPrice * currentValue.quantity,
+        accumulator + currentValue.attributes[currentValue.pack].salePrice * currentValue.quantity,
         0
       )
     );
