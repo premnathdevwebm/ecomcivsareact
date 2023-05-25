@@ -9,6 +9,7 @@ const AppContext = ({ children }) => {
   const [categories, setCategories] = useState();
   const [products, setProducts] = useState();
   const [newProducts, setNewProducts] = useState();
+  const [lovedProduct, setLovedProduct] = useState();
   const [showCart, setShowCart] = useState(false);
   const [showWish, setShowWish] = useState(false);
   const [cartItems, setCartItems] = useState([]);
@@ -118,6 +119,8 @@ const AppContext = ({ children }) => {
         handleUser,
         products,
         setProducts,
+        lovedProduct,
+        setLovedProduct,
         newProducts,
         setNewProducts,
         categories,

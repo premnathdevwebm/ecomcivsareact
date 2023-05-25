@@ -36,9 +36,13 @@ const ProfilePage = () => {
   }, []);
 
   async function transtactionStatus(data) {
-    const response = await makeRequestAuth(`myorder/${data.shipmentId}`);
-    setTrack(() => response.data);
-    openModal();
+    if (data.shipmentId) {
+      const response = await makeRequestAuth(`myorder/${data.shipmentId}`);
+      if (response.data) {
+        setTrack(() => response.data);
+        openModal();
+      }
+    }
   }
 
   return (

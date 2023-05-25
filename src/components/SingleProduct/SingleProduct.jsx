@@ -3,7 +3,7 @@ import { Context } from "../../utils/context";
 import { useParams } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import ReactImageMagnify from "./ReactMagnifier/ReactMagnifier";
-import RelatedProducts from "./RelatedProducts/RelatedProducts";
+//import RelatedProducts from "./RelatedProducts/RelatedProducts";
 import {
   FaFacebookF,
   FaTwitter,
@@ -37,7 +37,7 @@ const SingleProduct = () => {
       <div className="layout">
         <div className="single-product-page">
           <div className="left">
-            <ReactImageMagnify img={product.attributes.imageSrc} />
+            <ReactImageMagnify images={[product.attributes.imageSrc]} />
           </div>
           <div className="right">
             <span className="name">{product.attributes?.title}</span>

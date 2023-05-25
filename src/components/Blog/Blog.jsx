@@ -35,7 +35,6 @@ const Blog = () => {
         <h2 className="blog-title">{post.title}</h2>
         <p className="blog-date">{post.date}</p>
         <p className="blog-content">{post.content}</p>
-        <a href="#" className="read-more">Read More</a>
       </div>
     ))}
   </div>
