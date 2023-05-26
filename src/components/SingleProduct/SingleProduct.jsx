@@ -92,6 +92,9 @@ const SingleProduct = () => {
               <span className="category">
                 Category: &nbsp;{product.attributes?.category}
               </span>
+              <span className="summary">
+                Summary: &nbsp;{product.attributes?.summary}
+              </span>
               <div className="btnGroup">
               {product.attributes.type === "pack" ? "Packs": "Flavour"}{" "}
                 <button
