@@ -14,7 +14,7 @@ const CartItem = () => {
             <div className="image-container">
               <img
                 src={
-                  item.attributes[item.pack].imageSrc
+                  item.attributes[item.pack].imageSrc?.split(",")[0]
                 }
               />
             </div>

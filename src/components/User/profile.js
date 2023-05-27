@@ -3,6 +3,7 @@ import { Context } from "../../utils/context";
 import "./Profile.scss";
 import { makeRequestAuth } from "../../utils/api";
 import TrackingModal from "./TrackingModal";
+import PdfFile from "./Pdf/Pdf";
 
 const ProfilePage = () => {
   const { user } = useContext(Context);
@@ -69,21 +70,31 @@ const ProfilePage = () => {
               <th>Courier Patner</th>
               <th>Payment Type</th>
               <th>Price</th>
+              <th>Invoice</th>
             </tr>
           </thead>
           <tbody>
             {orders.map((order, i) => (
-              <tr
-                key={order.id}
-                onClick={() => {
-                  transtactionStatus(order);
-                }}
-              >
+              <tr key={order.id}>
                 <td>{i + 1}</td>
-                <td>{order.orderId}</td>
-                <td>{order.couriername}</td>
+                <td
+                style={{textDecoration: "underline"}}
+                  onClick={() => {
+                    transtactionStatus(order);
+                  }}
+                >
+                  {order.orderId}
+                </td>
+                <td>
+                  {order.couriername === ""
+                    ? "Not Yet Fixed"
+                    : order.couriername}
+                </td>
                 <td>{order.modeOfPay}</td>
                 <td>₹{order.orderSelling}</td>
+                <td>
+                  <PdfFile pdfUrl={order.invoiceURL} />
+                </td>
               </tr>
             ))}
           </tbody>

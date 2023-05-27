@@ -17,7 +17,6 @@ import {
 } from "react-icons/fa";
 import "./SingleProduct.scss";
 
-
 const SingleProduct = () => {
   const [type, setType] = useState("singleContainer");
   const [quantity, setQuantity] = useState(1);
@@ -71,13 +70,13 @@ const SingleProduct = () => {
             <div className="left">
               <ReactImageMagnify
                 images={[
-                  product.attributes[type].imageSrc
+                  ...(product.attributes[type].imageSrc
                     ? [
                         ...product.attributes[type].imageSrc
                           ?.split(",")
                           .map((item) => item.trim()),
                       ]
-                    : [],
+                    : []),
                 ]}
               />
             </div>
@@ -96,7 +95,7 @@ const SingleProduct = () => {
                 Summary: &nbsp;{product.attributes?.summary}
               </span>
               <div className="btnGroup">
-              {product.attributes.type === "pack" ? "Packs": "Flavour"}{" "}
+                {product.attributes.type === "pack" ? "Packs" : "Flavour"}{" "}
                 <button
                   style={{
                     backgroundColor: `${
@@ -188,10 +187,12 @@ const SingleProduct = () => {
               </div>
             </div>
           </div>
-          {/* <RelatedProducts
+          {/* 
+          <RelatedProducts
           productId={id}
           categoryId={product.categories.data[0].id}
-        /> */}
+        /> 
+        */}
         </div>
       </div>
       {product?.attributes?.combo?.isComboed && <>Combo</>}
