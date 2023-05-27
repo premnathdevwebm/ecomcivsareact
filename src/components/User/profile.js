@@ -11,6 +11,8 @@ const ProfilePage = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [track, setTrack] = useState([]);
 
+  console.log(">>>",user);
+
   const openModal = () => {
     setModalOpen(true);
     setTrack((data) => data);
@@ -56,6 +58,8 @@ const ProfilePage = () => {
             <p>Email: {user.user.email}</p>
             <p>Phone: {user.user.phone}</p>
             <p>Location: {`${user.user.address1} ${user.user.address2}`}</p>
+            <p>Reference Code: {user.user.referenceCode}</p>
+            <p>Internal Wallet: {user.user.wallet}</p>
           </div>
         </div>
       </div>
