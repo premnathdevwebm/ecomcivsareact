@@ -195,7 +195,7 @@ const SingleProduct = () => {
         */}
         </div>
       </div>
-      {product?.attributes?.combo?.isComboed && <>Combo</>}
+     {/*  {product?.attributes?.combo?.isComboed && <>Combo</>} */}
       <HorizontalTab tabs={tabs} />
     </>
   );
