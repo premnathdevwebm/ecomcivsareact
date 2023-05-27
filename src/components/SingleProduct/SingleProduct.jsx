@@ -96,7 +96,7 @@ const SingleProduct = () => {
               </span>
               <div className="btnGroup">
                 {product.attributes.type === "pack" ? "Packs" : "Flavour"}{" "}
-                <button
+                {product?.attributes?.singleContainer?.isActive && (<button
                   style={{
                     backgroundColor: `${
                       !product?.attributes?.singleContainer?.isActive && "gray"
@@ -108,9 +108,9 @@ const SingleProduct = () => {
                   disabled={!product?.attributes?.singleContainer?.isActive}
                   onClick={() => handleTypeChange("singleContainer")}
                 >
-                  1
-                </button>{" "}
-                <button
+                  {product?.attributes?.singleContainer?.title}
+                </button>)}{" "}
+                {product?.attributes?.doubleContainer?.isActive && (<button
                   style={{
                     backgroundColor: `${
                       !product?.attributes?.doubleContainer?.isActive && "gray"
@@ -123,9 +123,9 @@ const SingleProduct = () => {
                   disabled={!product?.attributes?.doubleContainer?.isActive}
                   onClick={() => handleTypeChange("doubleContainer")}
                 >
-                  2
-                </button>{" "}
-                <button
+                   {product?.attributes?.doubleContainer?.title}
+                </button>)}{" "}
+                {product?.attributes?.tripleContainer?.isActive && (<button
                   style={{
                     backgroundColor: `${
                       !product?.attributes?.tripleContainer?.isActive && "gray"
@@ -137,8 +137,8 @@ const SingleProduct = () => {
                   disabled={!product?.attributes?.tripleContainer?.isActive}
                   onClick={() => handleTypeChange("tripleContainer")}
                 >
-                  3
-                </button>
+                   {product?.attributes?.tripleContainer?.title}
+                </button>)}
               </div>
               <div className="cart-buttons">
                 <div className="quantity-buttons">
