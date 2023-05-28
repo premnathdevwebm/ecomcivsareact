@@ -50,13 +50,13 @@ const ReactMagnifier = ({ images }) => {
               src: currentImage,
               alt: "Main Image",
               width: 300,
-              height: 400,
+              height: 300,
               style: imageStyle,
             },
             largeImage: {
               src: currentImage,
               width: 900,
-              height: 800,
+              height: 900,
               style: largeStyle,
             },
             enlargedImageContainerDimensions: {

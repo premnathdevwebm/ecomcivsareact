@@ -61,6 +61,11 @@
       }
     }
   }
+  .descripProduct{
+    display: grid;
+    place-items: center; 
+    height: 500px;
+  }
   .content2 {
     display: flex;
     justify-content: flex-end;

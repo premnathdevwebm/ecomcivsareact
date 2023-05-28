@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import ReactImageMagnify from "./ReactMagnifier/ReactMagnifier";
 import HorizontalTab from "../Horizontal/Horizontal";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 //import RelatedProducts from "./RelatedProducts/RelatedProducts";
 import {
@@ -64,6 +66,7 @@ const SingleProduct = () => {
 
   return (
     <>
+    <ToastContainer position="top-right" />
       <div className="single-product-main-content">
         <div className="layout">
           <div className="single-product-page">
@@ -150,6 +153,7 @@ const SingleProduct = () => {
                   className="add-to-cart-button"
                   onClick={() => {
                     handleAddToCart(product, quantity, type);
+                    toast.success("Item added to cart");
                     setQuantity(1);
                   }}
                 >
@@ -161,6 +165,7 @@ const SingleProduct = () => {
                   className="add-to-wish-button"
                   onClick={() => {
                     handleAddToWish(product, quantity, type);
+                    toast.success("Item added to wishlist");
                     setQuantity(1);
                   }}
                 >

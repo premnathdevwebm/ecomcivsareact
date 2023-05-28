@@ -16,6 +16,7 @@ import Payment from "./components/Payment/Index";
 import PaymentSuccess from "./components/Payment/PaymentSuccess";
 import PaymentFailure from "./components/Payment/PaymentFailure";
 import AppContext from "./utils/context";
+import CCAvenuePayment from "./components/CCavenue/CCavenue";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/product/:id" element={<SingleProduct />} />
+            <Route path="/ccavenue" element={<CCAvenuePayment />} />
           </Route>
           <Route path="/payment" element={<Payment />}>
             <Route path="success" element={<PaymentSuccess />} />

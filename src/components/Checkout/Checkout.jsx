@@ -57,6 +57,9 @@ const CheckoutForm = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [useCashOnDelivery, setUseCashOnDelivery] = useState(false);
+  const [useCCavenue, setUseCCavenue] = useState(false);
+  const [promoCode, setPromoCode] = useState("");
+  const [refererCode, setRefererCode] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -210,7 +213,7 @@ const CheckoutForm = () => {
                 />
               </Grid>
             </Grid>
-            {!useCashOnDelivery && (
+            {(!useCashOnDelivery && !useCCavenue) && (
               <Grid item xs={12}>
                 <CardElement className="cardElement" />
               </Grid>
@@ -231,6 +234,35 @@ const CheckoutForm = () => {
                   />
                 }
                 label="Cash on Delivery"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={useCCavenue}
+                    onChange={(event) =>
+                      setUseCCavenue(event.target.checked)
+                    }
+                  />
+                }
+                label="Use Other Payment Options"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                label="Promo Code"
+                fullWidth
+                value={promoCode}
+                onChange={(event) => setPromoCode(event.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                label="Referer Code"
+                fullWidth
+                value={refererCode}
+                onChange={(event) => setRefererCode(event.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -262,7 +294,9 @@ const CheckoutForm = () => {
               {cartItems.map((ele) => {
                 return (
                   <ListItem key={ele.id}>
-                    <ListItemText primary={`${ele.attributes[ele.pack].title}`} />
+                    <ListItemText
+                      primary={`${ele.attributes[ele.pack].title}`}
+                    />
                     <Divider />
                     <ListItem divider>
                       <ListItemText primary="Sub Total" />
@@ -284,6 +318,14 @@ const CheckoutForm = () => {
             <ListItem>
               <ListItemText primary="Total" />
               <ListItemText primary={`${cartSubTotal}`} />
+            </ListItem>
+            <ListItem>
+              <ListItemText primary="Promo Code" />
+              <ListItemText primary={promoCode} />
+            </ListItem>
+            <ListItem>
+              <ListItemText primary="Referer Code" />
+              <ListItemText primary={refererCode} />
             </ListItem>
           </List>
         )}
