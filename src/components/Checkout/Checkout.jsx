@@ -105,13 +105,13 @@ const CheckoutForm = () => {
       } else {
         // Send the payment method to your server to complete the transaction
         setIsProcessing(false);
-        console.log(">>Payment", paymentMethod);
         const paymnentIntent = await makeRequestAuth.post("/create-charge", {
           payment_method_id: paymentMethod.id,
           amount: cartSubTotal * 100, // in cents
           currency: "inr",
           description: `order on placed`,
         });
+        console.log("PROCESSING", paymnentIntent);
         const paymentConfirmation = await stripe.confirmCardPayment(
           paymnentIntent.data,
           {
