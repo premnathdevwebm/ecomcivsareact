@@ -100,6 +100,7 @@ const CheckoutForm = () => {
       });
 
       if (error) {
+        console.log(">>ERROR", error);
         setErrorMessage(error.message);
         setIsProcessing(false);
       } else {
