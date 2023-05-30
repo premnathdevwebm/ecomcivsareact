@@ -113,6 +113,7 @@ const CheckoutForm = () => {
             description: `order on placed`,
           })
           .then(async (payIntent) => {
+            console.log("payIntent", payIntent);
             await stripe
               .confirmCardPayment(payIntent.data, {
                 payment_method: {
@@ -122,13 +123,13 @@ const CheckoutForm = () => {
               .then(async (data1) => {
                 console.log(">>>>>> RESPONSE", data1.paymentIntent);
                 /***
-           *  cardElement.clear();
-        if (paymentConfirmation.paymentIntent.status === "succeeded") {
-          await makeRequestAuth.post("/orderplace", {
-            cartItems: cartItemsTemps,
-            cartSubTotal,
-            paymentConfirmation,
-          });
+                 *  cardElement.clear();
+                if (paymentConfirmation.paymentIntent.status === "succeeded") {
+                   await makeRequestAuth.post("/orderplace", {
+                    cartItems: cartItemsTemps,
+                    cartSubTotal,
+                    paymentConfirmation,
+                });
         }
            */
               })
