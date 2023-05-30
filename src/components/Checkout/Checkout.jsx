@@ -121,7 +121,7 @@ const CheckoutForm = () => {
                 },
               })
               .then(async (data1) => {
-                console.log(">>>>>> RESPONSE", data1.paymentIntent);
+                console.log(">>>>>> RESPONSE", data1);
                 /***
                  *  cardElement.clear();
                 if (paymentConfirmation.paymentIntent.status === "succeeded") {
