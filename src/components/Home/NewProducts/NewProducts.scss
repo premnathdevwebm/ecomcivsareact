@@ -66,10 +66,9 @@
     }
   }
 
- 
-    .descripProduct {
-      display: none;
-      @include md {
+  .descripProduct {
+    display: none;
+    @include md {
       display: grid;
       place-items: center;
       height: 33%;

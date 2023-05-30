@@ -236,7 +236,7 @@ const CheckoutForm = () => {
                 label="Cash on Delivery"
               />
             </Grid>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <FormControlLabel
                 control={
                   <Checkbox
@@ -248,7 +248,7 @@ const CheckoutForm = () => {
                 }
                 label="Use Other Payment Options"
               />
-            </Grid>
+            </Grid> */}
             <Grid item xs={12}>
               <TextField
                 label="Promo Code"

@@ -19,7 +19,7 @@ const Footer = () => {
           <div className="c-item">
             <FaLocationArrow />
             <div className="text">
-              Ceego Labs Pvt Ltd S.No : 84 & 86 , Manjamedu Village , Thennari
+              Civsa S.No : 84 1A2 , Manjamedu Village , Thennari
               Post, Sungavarchatiram (VIA),Sriperumpudur Pin:631604
             </div>
           </div>
