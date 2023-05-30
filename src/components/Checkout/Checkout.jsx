@@ -100,12 +100,12 @@ const CheckoutForm = () => {
       });
 
       if (error) {
-        console.log(">>ERROR", error);
         setErrorMessage(error.message);
         setIsProcessing(false);
       } else {
         // Send the payment method to your server to complete the transaction
         setIsProcessing(false);
+        console.log(">>Payment", paymentMethod);
         const paymnentIntent = await makeRequestAuth.post("/create-charge", {
           payment_method_id: paymentMethod.id,
           amount: cartSubTotal * 100, // in cents
