@@ -29,9 +29,9 @@ const Header = () => {
     window.addEventListener("scroll", handleScroll);
   }, []);
 
-  const { cartCount, wishCount, showCart, showWish, setShowCart, setShowWish } =
+  const { user, cartCount, wishCount, showCart, showWish, setShowCart, setShowWish } =
     useContext(Context);
-
+  console.log();
   return (
     <>
       <header className={`main-header ${scrolled ? "sticky-header" : ""}`}>

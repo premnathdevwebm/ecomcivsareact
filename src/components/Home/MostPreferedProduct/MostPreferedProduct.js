@@ -14,7 +14,7 @@ const MostPreferedProduct = ({ lovedProduct }) => {
           <h2>{"Marine Collagen"}</h2>
           <ImageWithOverlay
             imageUrl={
-              "https://civsa.in/assets/uploads/media-uploader/untitled-design-2-removebg-preview1683603699.png"
+              "https://res.cloudinary.com/db58ap8dm/image/upload/v1685264166/uxwfs5ntnxuqw0hg0keq.png"
             }
           />
           <br />
