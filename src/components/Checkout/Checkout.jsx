@@ -105,21 +105,23 @@ const CheckoutForm = () => {
       } else {
         // Send the payment method to your server to complete the transaction
         setIsProcessing(false);
-        const paymnentIntent = await makeRequestAuth.post("/create-charge", {
-          payment_method_id: paymentMethod.id,
-          amount: cartSubTotal * 100, // in cents
-          currency: "inr",
-          description: `order on placed`,
-        });
-        await stripe
-          .confirmCardPayment(paymnentIntent.data, {
-            payment_method: {
-              card: cardElement,
-            },
+        await makeRequestAuth
+          .post("/create-charge", {
+            payment_method_id: paymentMethod.id,
+            amount: cartSubTotal * 100, // in cents
+            currency: "inr",
+            description: `order on placed`,
           })
-          .then(async(data1) => {
-            console.log(">>>>>> RESPONSE", data1.paymentIntent);
-            /***
+          .then(async (payIntent) => {
+            await stripe
+              .confirmCardPayment(payIntent.data, {
+                payment_method: {
+                  card: cardElement,
+                },
+              })
+              .then(async (data1) => {
+                console.log(">>>>>> RESPONSE", data1.paymentIntent);
+                /***
            *  cardElement.clear();
         if (paymentConfirmation.paymentIntent.status === "succeeded") {
           await makeRequestAuth.post("/orderplace", {
@@ -129,10 +131,12 @@ const CheckoutForm = () => {
           });
         }
            */
+              })
+              .catch((err) => {
+                throw err;
+              });
           })
-          .catch((err) => {
-            console.log(">>>>>> ERROR", err);
-          });
+          .catch((error1) => {});
       }
 
       setIsProcessing(false);
