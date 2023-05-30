@@ -111,16 +111,16 @@ const CheckoutForm = () => {
           currency: "inr",
           description: `order on placed`,
         });
-        console.log("PROCESSING", paymnentIntent);
-        const paymentConfirmation = await stripe.confirmCardPayment(
-          paymnentIntent.data,
-          {
+        await stripe
+          .confirmCardPayment(paymnentIntent.data, {
             payment_method: {
               card: cardElement,
             },
-          }
-        );
-        cardElement.clear();
+          })
+          .then(async(data1) => {
+            console.log(">>>>>> RESPONSE", data1.paymentIntent);
+            /***
+           *  cardElement.clear();
         if (paymentConfirmation.paymentIntent.status === "succeeded") {
           await makeRequestAuth.post("/orderplace", {
             cartItems: cartItemsTemps,
@@ -128,6 +128,11 @@ const CheckoutForm = () => {
             paymentConfirmation,
           });
         }
+           */
+          })
+          .catch((err) => {
+            console.log(">>>>>> ERROR", err);
+          });
       }
 
       setIsProcessing(false);
@@ -214,7 +219,7 @@ const CheckoutForm = () => {
                 />
               </Grid>
             </Grid>
-            {(!useCashOnDelivery && !useCCavenue) && (
+            {!useCashOnDelivery && !useCCavenue && (
               <Grid item xs={12}>
                 <CardElement className="cardElement" />
               </Grid>
